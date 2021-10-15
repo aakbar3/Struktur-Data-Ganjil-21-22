@@ -1,53 +1,99 @@
-#include<iostream>
-
+#include <iostream>
 using namespace std;
 
-struct buku
-{
-    //komponen /member
-    string judul, pengarang;
-    int tahunterbit;
+struct Buku{
+    string pengarang, judul;
+    int tahun;
 
-    buku *next;
-};
+    Buku *next;
+}*head, *tail, *cur, *newNode, *lastNode, *del;
 
-int main()
-{
-    //inisialisasi single lingked list
-    buku *node1, *node2, *node3;
+void SingleLinkedList(string pengarang, string judul, int tahun){
+    head = new Buku();
+    head->pengarang = pengarang;
+    head->judul = judul;
+    head->tahun = tahun;
+    head->next = NULL;
+    tail = head;}
 
-    node1 = new buku();
-    node2 = new buku();
-    node3 = new buku();
+void addFirst(string pengarang, string judul, int tahun){
+    newNode = new Buku();
+    newNode->pengarang = pengarang;
+    newNode->judul = judul;
+    newNode->tahun = tahun;
+    newNode->next = head;
+    head = newNode;
+}
 
-    //Pengisian node 1
-    node1->judul = "Matematika";
-    node1->pengarang = "Ahli Matematika";
-    node1->tahunterbit = 1995;
-    node1->next = node2;
+void addLast(string pengarang, string judul, int tahun){
+    lastNode = new Buku();
+    lastNode->pengarang = pengarang;
+    lastNode->judul = judul;
+    lastNode->tahun = tahun;
+    lastNode->next = NULL;
+    tail->next = lastNode;
+    tail = lastNode;
 
-    //Pengisian node 2
-    node2->judul = "Biologi";
-    node2->pengarang = "Lana";
-    node2->tahunterbit = 1985;
-    node2->next = node3;
+}
 
-    //Pengisian node 3
-    node3->judul = "Kata";
-    node3->pengarang = "Agung";
-    node3->tahunterbit = 1990;
-    node3->next = NULL;
+void removeFirst(){
+    del = head;
+    head = head->next;
+    delete del;
+}
 
-    //print single lingked list
+void removeLast(){
+    del = tail;
+    cur = head;
+    while (cur->next != tail){
+        cur = cur->next;
+    }
+    tail = cur;
+    tail->next = NULL;
+}
 
-    buku *cur;
-    cur = node1;
-    while(cur !=NULL){
-        cout << "Judul BUku : " << cur->judul << endl;
-        cout << "Pengarang : " << cur->pengarang << endl;
-        cout << "Tahun Terbit : " << cur->tahunterbit << endl;
-        
-    	cur = cur->next;
+void changeFirst(string pengarang, string judul, int tahun){
+    head->pengarang = pengarang;
+    head->judul = judul;
+    head->tahun = tahun;
+}
+
+void changeLast(string pengarang, string judul, int tahun){
+    tail->pengarang = pengarang;
+    tail->judul = judul;
+    tail->tahun = tahun;
+}
+
+void printSingleLinkedList(){
+    cur = head;
+    while (cur != NULL){
+        cout << "Pengarang  = " << cur->pengarang << endl;
+        cout << "Judul   = " << cur->judul << endl;
+        cout << "Tahun   = " << cur->tahun << endl;
+        cur = cur->next;
     }
 }
 
+int main(){
+    SingleLinkedList("Otan","Dunia Alam",2019);
+    printSingleLinkedList();
+    cout << endl;
+
+    addFirst("Maya","Indahnya Berbagi",2010);
+    printSingleLinkedList();
+    cout << endl;
+
+    addLast("Riski","Belajar Membaca",2019);
+    printSingleLinkedList();
+    cout << endl;
+
+   changeFirst("Mila","Cerita Pandaku",2021);
+   printSingleLinkedList();
+   cout << endl;
+
+    changeLast("Nara","Hidup itu Melelahkan", 2017);
+    printSingleLinkedList();
+    cout << endl;
+
+ return 0;
+}
