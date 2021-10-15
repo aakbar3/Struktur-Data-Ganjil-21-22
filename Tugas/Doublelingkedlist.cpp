@@ -1,99 +1,91 @@
+//double linked list
+
 #include <iostream>
 using namespace std;
 
-struct Buku{
-    string pengarang, judul;
-    int tahun;
+struct user{
+    string nama, password;
+    user *prev;
+    user *next;
+}*head, *tail, *cur, *newNode, *del;
 
-    Buku *next;
-}*head, *tail, *cur, *newNode, *lastNode, *del;
-
-void SingleLinkedList(string pengarang, string judul, int tahun){
-    head = new Buku();
-    head->pengarang = pengarang;
-    head->judul = judul;
-    head->tahun = tahun;
+void createDoubleLinkedList(string nama, string password){
+    head = new user();
+    head->nama = nama;
+    head->password = password;
+    head->prev = NULL;
     head->next = NULL;
-    tail = head;}
+    tail = head;
+}
 
-void addFirst(string pengarang, string judul, int tahun){
-    newNode = new Buku();
-    newNode->pengarang = pengarang;
-    newNode->judul = judul;
-    newNode->tahun = tahun;
+void addFirst(string nama, string password){
+    newNode = new user();
+    newNode->nama = nama;
+    newNode->password = password;
+    newNode->prev = NULL;
     newNode->next = head;
+    head->prev = newNode;
     head = newNode;
 }
 
-void addLast(string pengarang, string judul, int tahun){
-    lastNode = new Buku();
-    lastNode->pengarang = pengarang;
-    lastNode->judul = judul;
-    lastNode->tahun = tahun;
-    lastNode->next = NULL;
-    tail->next = lastNode;
-    tail = lastNode;
-
+void addLast(string nama, string password){
+    newNode = new user();
+    newNode->nama = nama;
+    newNode->password = password;
+    newNode->prev = tail;
+    newNode->next = NULL;
+    tail->next = newNode;
+    tail = newNode;
 }
 
 void removeFirst(){
     del = head;
     head = head->next;
+    head->prev = NULL;
     delete del;
 }
 
 void removeLast(){
     del = tail;
-    cur = head;
-    while (cur->next != tail){
-        cur = cur->next;
-    }
-    tail = cur;
+    tail = tail->prev;
     tail->next = NULL;
+    delete del;
 }
 
-void changeFirst(string pengarang, string judul, int tahun){
-    head->pengarang = pengarang;
-    head->judul = judul;
-    head->tahun = tahun;
-}
+void printDoubleLinkedList(){
 
-void changeLast(string pengarang, string judul, int tahun){
-    tail->pengarang = pengarang;
-    tail->judul = judul;
-    tail->tahun = tahun;
-}
-
-void printSingleLinkedList(){
     cur = head;
     while (cur != NULL){
-        cout << "Pengarang  = " << cur->pengarang << endl;
-        cout << "Judul   = " << cur->judul << endl;
-        cout << "Tahun   = " << cur->tahun << endl;
+        cout << "nama user = " << cur->nama << endl;
+        cout << "password  = " << cur->password << endl;
+
         cur = cur->next;
     }
+
 }
 
 int main(){
-    SingleLinkedList("Otan","Dunia Alam",2019);
-    printSingleLinkedList();
+
+    createDoubleLinkedList("Aras", "kecoa");
+    printDoubleLinkedList();
     cout << endl;
 
-    addFirst("Maya","Indahnya Berbagi",2010);
-    printSingleLinkedList();
+    addFirst("Nara", "pentol");
+    printDoubleLinkedList();
     cout << endl;
 
-    addLast("Riski","Belajar Membaca",2019);
-    printSingleLinkedList();
+    addLast("Agan", "pengendara");
+    printDoubleLinkedList();
     cout << endl;
 
-   changeFirst("Mila","Cerita Pandaku",2021);
-   printSingleLinkedList();
-   cout << endl;
-
-    changeLast("Nara","Hidup itu Melelahkan", 2017);
-    printSingleLinkedList();
+    removeFirst();
+    printDoubleLinkedList();
     cout << endl;
 
- return 0;
+    removeLast();
+    printDoubleLinkedList();
+    cout << endl;
+    
+    return 0;
+    
 }
